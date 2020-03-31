@@ -11,7 +11,8 @@ gcloud config set project PROJECT-ID
 
 # Building
 gcloud builds submit --tag gcr.io/PROJECT-ID/helloworld
-gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --platform managed
+gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --platform managed --memory 512M
+# We can add: --memory 1Gi --timeout=1m20s (by default 256M memory and 5minutes timeout) (see https://cloud.google.com/run/docs/configuring/memory-limits)
 ( allow unauthenticated invocations: respond y )
 ( will give you url to the project:  SOMEURL.run.app )
 
@@ -20,5 +21,15 @@ gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --platform managed
 #? export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 sudo gcloud auth configure-docker
 (then finally)
-PORT=8080 && docker run -p 9090:${PORT} -e PORT=${PORT} gcr.io/PROJECT_ID/IMAGE
+PORT=8080 && sudo docker run -p 9090:${PORT} -e PORT=${PORT} gcr.io/PROJECT_ID/IMAGE
 (but the building is not very fast ...)
+# Then manage docker images with
+docker container ls -a
+docker system prune
+
+# Inspect projects and their logs at:
+https://console.cloud.google.com/run?project=PROJECT_ID
+
+# BTW for gpu might need:
+Anthos - https://cloud.google.com/run/choosing-a-platform
+
