@@ -1,0 +1,16 @@
+# Following: https://cloud.google.com/run/docs/quickstarts/build-and-deploy
+
+# First setup:
+
+(install gcloud)
+(make project XYZ on the https://console.cloud.google.com/projectselector2/)
+gcloud auth login
+gcloud projects list # see the PROJECT-ID there
+gcloud config set project PROJECT-ID
+
+
+# Building
+gcloud builds submit --tag gcr.io/PROJECT-ID/helloworld
+gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --platform managed
+( allow unauthenticated invocations: respond y )
+( will give you url to the project:  SOMEURL.run.app )
