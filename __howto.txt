@@ -14,3 +14,11 @@ gcloud builds submit --tag gcr.io/PROJECT-ID/helloworld
 gcloud run deploy --image gcr.io/PROJECT-ID/helloworld --platform managed
 ( allow unauthenticated invocations: respond y )
 ( will give you url to the project:  SOMEURL.run.app )
+
+# Testing locally
+#? (might need to download the credentials JSON as instructed by https://cloud.google.com/docs/authentication/getting-started)
+#? export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+sudo gcloud auth configure-docker
+(then finally)
+PORT=8080 && docker run -p 9090:${PORT} -e PORT=${PORT} gcr.io/PROJECT_ID/IMAGE
+(but the building is not very fast ...)
